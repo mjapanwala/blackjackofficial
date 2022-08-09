@@ -1,0 +1,31 @@
+Hooks make it possible to use React state and lifecycle methods, without having to use a ES2015 class component.
+Although Hooks are not necessarily a design pattern, Hooks play a very important role in your applciation design.
+Many traditional design patterns can be replaced by Hooks
+
+Just to change a state of the button can be very cpmplicated.
+The common way to share code among several components is by using the Higher 
+Order Component or Render Props pattern.
+
+Hooks, with all the technical difficulties with class components, React introduced React Hooks.
+React Hooks are functions that you can use to manage a components state and lifecycle methods.
+React Hooks make it possible to:
+Add state to a functional component
+Manage a component's lifecycle without having to use lifecycle methods such as component
+didMount and component will unmount
+Reuse the stateful logic among multiple components throughout the app
+If you have state like const [value, setValue] = React.useState('');
+The first value can be compared to a class component's this.state.[value]
+The equivalent of useEffect in classes was componentDidMount, componentWillUnmount and componentDidUpdate
+componentDidMount(){...};
+useEffect(() => {...}, []);
+
+componentWillUnmount(){...};
+useEffect(() => {return () => {...}}, [])
+
+componentDidUpdate() {...}
+useEffect(() => {...})
+
+Custom Hooks
+You may have noticed that all hooks start with use
+Its important to start your hooks with use in order for React to check if it violates the rules of Hooks
+
