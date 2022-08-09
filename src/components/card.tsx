@@ -166,7 +166,7 @@ export default function Card({ card: { name, value, design } }) {
               {face}
               {face}
               {face}
-              {face}
+              {face} asdasda
             </div>
           </div>
         );
