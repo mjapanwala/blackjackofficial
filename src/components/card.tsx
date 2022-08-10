@@ -1,6 +1,8 @@
 import React from "react";
 import { useGame } from "@containers/GameContainer";
-
+import Jack from "./Jack";
+import Queen from "./Queen";
+import King from "./King";
 export default function Card({ card: { name, value, design } }) {
   const { deck } = useGame();
   const designMap = {
@@ -9,14 +11,13 @@ export default function Card({ card: { name, value, design } }) {
     spades: <>&#9824;</>,
     clubs: <>&#9827;</>,
   };
-
+  const isRed = design === "hearts" || design === "diamonds";
   const icon = designMap[design];
 
   const GenerateInside = () => {
-    const styleChoice =
-      design === "hearts" || design === "diamonds"
-        ? "  text-3xl text-red-600"
-        : "  text-3xl text-black-600";
+    const styleChoice = isRed
+      ? "  text-3xl text-red-600"
+      : "  text-3xl text-black-600";
     switch (name) {
       case 2:
         return (
@@ -166,65 +167,65 @@ export default function Card({ card: { name, value, design } }) {
               {face}
               {face}
               {face}
-              {face} asdasdasdasd
+              {face}
             </div>
           </div>
         );
         break;
       case "J":
         return (
-          <div className="flex flex-col h-48 justify-center  font-serif">
-            JACK
+          <div className="flex flex-col  justify-center  font-serif">
+            <Jack black={!isRed} />
+           
           </div>
         );
         break;
       case "Q":
         return (
-          <div className="flex flex-col h-48 justify-center  font-serif">
-            QUEEN
+          <div className="flex flex-col  justify-center  font-serif">
+             <Queen black={!isRed}/>
           </div>
         );
         break;
       case "K":
         return (
-          <div className="flex flex-col h-48 justify-center  font-serif">
-            KING
-          </div>
+          <div className="flex flex-col  justify-center  font-serif"><King black={!isRed}/></div>
         );
         break;
       case "A":
         return (
-          <div className="flex flex-col h-48 justify-center  font-serif">
-            ACE
-          </div>
+          <div className="flex flex-col  justify-center  font-serif">ACE</div>
         );
         break;
       default:
         break;
     }
   };
-  return (
-    <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md hover:scale-105 cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
-      <div className="font-serif text-lg  w-full  h-11 leading-9">
-        <div className="leading-none text-xl">{name}</div>
-        <span
-          className={`text-lg  ${
+  const CornerIcons = ({ flip = false }: { flip?: boolean }) => {
+    return (
+      <div className={`font-serif  w-full ${flip ? "rotate-180" : ""}`}>
+        <div className=" text-xl">{name}</div>
+        <div
+          className={` leading-3 ${
             design === "hearts" || design === "diamonds"
               ? "text-red-500"
               : "text-black-500"
           } `}
         >
           {icon}
-        </span>
+        </div>
       </div>
+    );
+  };
+  return (
+    <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md hover:scale-105 cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
+      <CornerIcons />
       <div
-        className={`text-lg text-center  w-full  absolute inset-0  p-2 xl:p-4`}
+        className={`text-lg text-center scale-75  w-full  absolute inset-0  p-2 xl:p-4`}
       >
         {GenerateInside()}
       </div>
-      <div className="text-lg text-right">
-        <div className="rotate-180 inline-block">{name}</div>
-      </div>
+      <CornerIcons flip />
     </div>
   );
 }

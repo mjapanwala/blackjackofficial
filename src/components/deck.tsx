@@ -8,9 +8,9 @@ export default function Deck({}: Props) {
   const { deck } = useGame();
   return (
     <div className="flex flex-wrap">
-      {deck.map((card) => (
+      {/* {deck.map((card) => (
         <Card  card={card}/>
-      ))}
+      ))} */}
     </div>
   );
 }

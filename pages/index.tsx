@@ -5,6 +5,7 @@ import { useGame } from "@containers/GameContainer";
 import useLocalStorage from "@components/useLocalStorage";
 import Card from "../../v2/src/components/card";
 import Deck from "@components/deck";
+import Random from "@components/Random";
 const Input: React.FC = ({ ...other }) => {
   const [input, setInput] = useState("");
   const { username, amount, deck } = useGame();
@@ -25,6 +26,7 @@ const Input: React.FC = ({ ...other }) => {
         current amount: {amount}
         {!username && modal}
         <Deck />
+        <Random/>
       </div>
     </>
   );
