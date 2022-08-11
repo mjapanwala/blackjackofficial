@@ -3,8 +3,8 @@ import { useGame } from "@containers/GameContainer";
 import Jack from "./Jack";
 import Queen from "./Queen";
 import King from "./King";
+import BackOfTheCard from "./BackOfTheCard";
 export default function Card({ card: { name, value, design } }) {
-  const { deck } = useGame();
   const designMap = {
     diamonds: <>&#9830;</>,
     hearts: <>&#9829;</>,
@@ -18,21 +18,22 @@ export default function Card({ card: { name, value, design } }) {
     const styleChoice = isRed
       ? "  text-3xl text-red-600"
       : "  text-3xl text-black-600";
+    var styledIcon = <div className={`${styleChoice} `}>{icon}</div>;
     switch (name) {
       case 2:
         return (
           <div className="flex flex-col justify-between   h-full p-2">
-            <div className={`${styleChoice} `}>{icon}</div>
-            <div className={`${styleChoice}`}>{icon}</div>
+            {styledIcon}
+            {styledIcon}
           </div>
         );
         break;
       case 3:
         return (
           <div className="flex flex-col justify-between     h-full p-2">
-            <div className={`${styleChoice}`}>{icon}</div>
-            <div className={`${styleChoice}`}>{icon}</div>
-            <div className={`${styleChoice}`}>{icon}</div>
+            {styledIcon}
+            {styledIcon}
+            {styledIcon}
           </div>
         );
         break;
@@ -40,12 +41,12 @@ export default function Card({ card: { name, value, design } }) {
         return (
           <div className="flex  justify-around  p-2   h-full ">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className="flex flex-col justify-between  ">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
@@ -54,15 +55,13 @@ export default function Card({ card: { name, value, design } }) {
         return (
           <div className="flex  justify-evenly  h-full p-2   ">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
             </div>
-            <div className="flex flex-col justify-center   ">
-              <div className={`${styleChoice}`}>{icon}</div>
-            </div>
+            <div className="flex flex-col justify-center   ">{styledIcon}</div>
             <div className="flex flex-col justify-between  ">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
@@ -71,33 +70,32 @@ export default function Card({ card: { name, value, design } }) {
         return (
           <div className="flex  justify-around    h-full p-2">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
         break;
       case 7:
+        
         return (
-          <div className="flex  justify-evenly  h-full p-2">
+          <div id="card7" className="flex  justify-evenly  h-full p-2">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
-            <div className="mt-6">
-              <div className={`${styleChoice}`}>{icon}</div>
-            </div>
+            <div className="mt-6">{styledIcon}</div>
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
@@ -106,18 +104,18 @@ export default function Card({ card: { name, value, design } }) {
         return (
           <div className="flex  justify-evenly  h-full p-2">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className="flex flex-col justify-center">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
@@ -126,19 +124,17 @@ export default function Card({ card: { name, value, design } }) {
         return (
           <div className="flex  justify-evenly  h-full p-2">
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
-            <div className="my-auto flex  ">
-              <div className={`${styleChoice}`}>{icon}</div>
-            </div>
+            <div className="my-auto flex  ">{styledIcon}</div>
             <div className="flex flex-col justify-between">
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
-              <div className={`${styleChoice}`}>{icon}</div>
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
@@ -150,51 +146,54 @@ export default function Card({ card: { name, value, design } }) {
         //iunno scale for 10 looks a littl sus you have to make them smalelr or they will go over the corner number?
         //i think make width of card bigger? yeah that will help and also it doesnt look that bad anyway card is def too small tho
         // actually i think the icons are also big lol im telling you man 4xl is too much
-        var face = <div className={`${styleChoice}`}>{icon}</div>;
+        var face = { styledIcon };
         return (
           <div className="flex  justify-evenly  h-full p-2 px-4  ">
             <div className="flex flex-col justify-between">
-              {face}
-              {face}
-              {face}
-              {face}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className=" flex flex-col justify-evenly">
-              {face}
-              {face}
+              {styledIcon}
+              {styledIcon}
             </div>
             <div className="flex flex-col justify-between">
-              {face}
-              {face}
-              {face}
-              {face}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
+              {styledIcon}
             </div>
           </div>
         );
         break;
       case "J":
         return (
-          <div className="flex flex-col  justify-center  font-serif">
+          <div className="flex flex-col  justify-center pt-[10px]  font-serif h-full p-2 px-4 scale-[2]">
             <Jack black={!isRed} />
-           
           </div>
         );
         break;
       case "Q":
         return (
-          <div className="flex flex-col  justify-center  font-serif">
-             <Queen black={!isRed}/>
+          <div className="flex flex-col  justify-center  font-serif h-full p-2 px-4 scale-[2]">
+            <Queen black={!isRed} />
           </div>
         );
         break;
       case "K":
         return (
-          <div className="flex flex-col  justify-center  font-serif"><King black={!isRed}/></div>
+          <div className="flex flex-col  justify-center  font-serif h-full p-2 px-4 scale-[2]">
+            <King black={!isRed} />
+          </div>
         );
         break;
       case "A":
         return (
-          <div className="flex flex-col  justify-center  font-serif">ACE</div>
+          <div className="flex flex-col  justify-center scale-[3]  font-serif h-full">
+            {styledIcon}
+          </div>
         );
         break;
       default:
@@ -218,14 +217,16 @@ export default function Card({ card: { name, value, design } }) {
     );
   };
   return (
-    <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md hover:scale-105 cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
+    <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md    hover:scale-x-125  cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
       <CornerIcons />
+     
       <div
-        className={`text-lg text-center scale-75  w-full  absolute inset-0  p-2 xl:p-4`}
+        className={`text-lg text-center   w-full  absolute inset-0  p-2 xl:p-4`}
       >
         {GenerateInside()}
       </div>
       <CornerIcons flip />
+      <BackOfTheCard/>
     </div>
   );
 }

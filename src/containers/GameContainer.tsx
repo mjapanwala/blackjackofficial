@@ -5,7 +5,12 @@ type Props = {};
 export default function GameContainer({ children }: PropsWithChildren<{}>) {
   const [username, setUsername] = useLocalStorage("username", "");
   const [amount, setAmount] = useLocalStorage("amount", 0);
-  const [deck, setDeck] = useState(deckGenerator());
+  const [deck, setDeck] = useState([]);
+  useEffect(() => setDeck(deckGenerator()), []);
+  // const popFromDeck = () => {
+  //   const temp = [...deck];
+  //   const slicedCard = temp.slice(Math.random() * temp.length);
+  // };
   const setFormValues = (values) => {
     setUsername(values.username);
     setAmount(values.amount);
@@ -25,6 +30,7 @@ const GameContext = React.createContext({
 });
 
 export const useGame = () => React.useContext(GameContext);
+
 function deckGenerator() {
   const names = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"];
   const design = ["clubs", "spades", "diamonds", "hearts"];
@@ -44,5 +50,15 @@ function deckGenerator() {
       });
     }
   }
+
+  for (let i = 0; i < deck.length; i++) {
+    const randomIndex = Math.floor(Math.random() * deck.length);
+    if (i !== randomIndex) {
+      const selectedCard = deck[randomIndex]; //D
+      deck[randomIndex] = deck[i];
+      deck[i] = selectedCard;
+    }
+  }
+ 
   return deck;
 }
