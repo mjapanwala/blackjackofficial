@@ -9,7 +9,9 @@ export default function Deck({}: Props) {
   return (
     <div className="flex flex-wrap">
       {deck.map((card, index) => (
+        
         <Card card={card} key={index} />
+       
       ))}
     </div>
   );

@@ -1,20 +1,20 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 
 import { useGame } from '@containers/GameContainer';
 export default function BackOfTheCard() {
+  const [flipCount, setFlipCount] = useState(0)
   const {deck} = useGame()
+  const handleMouse = (e) => {
 
-  const handleMouse = () => {
+    console.log(e)
     const newAudio = new Audio("\mixkit-fast-double-click-on-mouse-275.wav")
     newAudio.play()
   }
-  function checkToSeeUserCard() {
-    
-  }
+  
   return (
     <>
-    <div onMouseOver={handleMouse} className='transition-all hover:rotate-180  m-1 w-32 rounded bg-white mb-2 absolute inset-0 shadow-md cursor-pointer h-full justify-between p-2 hover:scale-x-125 hover:shadow-2xl'>
-    <div className='scale-50 absolute w-full '>
+    <div onMouseOver={handleMouse} className='rotational backface-hidden border-double border-2 border-indigo-600 transition-all  m-1 w-32 rounded bg-white mb-2 relative  shadow-md cursor-pointer h-full justify-between p-2 '>
+    <div className=' '>
       <img src="\2028480-3f51b5.png"/>
     </div>
    </div>

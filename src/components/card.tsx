@@ -217,6 +217,7 @@ export default function Card({ card: { name, value, design } }) {
     );
   };
   return (
+    <>
     <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md    hover:scale-x-125  cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
       <CornerIcons />
      
@@ -226,7 +227,11 @@ export default function Card({ card: { name, value, design } }) {
         {GenerateInside()}
       </div>
       <CornerIcons flip />
-      <BackOfTheCard/>
+     <div className="absolute w-full inset-0 mb-2 ">
+     <BackOfTheCard/>
+     </div>
     </div>
+    
+  </>
   );
 }
