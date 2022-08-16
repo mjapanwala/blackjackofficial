@@ -1,5 +1,9 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import useLocalStorage from "../components/useLocalStorage";
+import dynamic from "next/dynamic";
+// const Confetti = dynamic(() => import("../components/CustomConfetti"), {
+//   ssr: false,
+// });
 type Props = {};
 
 export default function GameContainer({ children }: PropsWithChildren<{}>) {
@@ -15,8 +19,12 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
     setUsername(values.username);
     setAmount(values.amount);
   };
+
+  // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
     <GameContext.Provider value={{ username, amount, setFormValues, deck }}>
+      {/* if a boolean is true: <Confetti/> : null */}
+      {/* <Confetti /> */}
       {children}
     </GameContext.Provider>
   );
@@ -59,6 +67,6 @@ function deckGenerator() {
       deck[i] = selectedCard;
     }
   }
- 
+
   return deck;
 }

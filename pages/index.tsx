@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import Form from "@components/form";
 import { useGame } from "@containers/GameContainer";
 import useLocalStorage from "@components/useLocalStorage";
 import Card from "../../v2/src/components/card";
 import Deck from "@components/deck";
 import Random from "@components/Random";
+
+
 const Input: React.FC = ({ ...other }) => {
   const [input, setInput] = useState("");
   const { username, amount, deck } = useGame();
@@ -27,6 +29,7 @@ const Input: React.FC = ({ ...other }) => {
         {!username && modal}
         <Deck />
         <Random/>
+        
       </div>
     </>
   );
