@@ -10,6 +10,9 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
   const [username, setUsername] = useLocalStorage("username", "");
   const [amount, setAmount] = useLocalStorage("amount", 0);
   const [deck, setDeck] = useState([]);
+  const [playerCards, setPlayerCards] = useState([]);
+  const [dealerCards, setDealerCards] = useState([]);
+
   useEffect(() => setDeck(deckGenerator()), []);
   // const popFromDeck = () => {
   //   const temp = [...deck];
@@ -20,9 +23,15 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
     setAmount(values.amount);
   };
 
+  const getCard = (cardInformation) => {
+    const randomNumber = Math.floor(Math.random() * deck.length);
+    const splicedCard = deck.splice(randomNumber, 1);
+    return splicedCard
+  }
+
   // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
-    <GameContext.Provider value={{ username, amount, setFormValues, deck }}>
+    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerCards, playerCards, setDealerCards }}>
       {/* if a boolean is true: <Confetti/> : null */}
       {/* <Confetti /> */}
       {children}
@@ -35,6 +44,9 @@ const GameContext = React.createContext({
   setFormValues: undefined,
   amount: undefined,
   deck: undefined,
+  getCard: undefined,
+  setPlayerHands: undefined,
+  playerCards: undefined
 });
 
 export const useGame = () => React.useContext(GameContext);

@@ -6,7 +6,7 @@ import useLocalStorage from "@components/useLocalStorage";
 import Card from "../../v2/src/components/card";
 import Deck from "@components/deck";
 import Random from "@components/Random";
-
+import PlayerHands from "@components/PlayerHands";
 
 const Input: React.FC = ({ ...other }) => {
   const [input, setInput] = useState("");
@@ -29,7 +29,7 @@ const Input: React.FC = ({ ...other }) => {
         {!username && modal}
         <Deck />
         <Random/>
-        
+        <PlayerHands/>
       </div>
     </>
   );

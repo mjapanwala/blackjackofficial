@@ -7,7 +7,9 @@ import BackOfTheCard from "./BackOfTheCard";
 import Confetti from "react-confetti";
 import {AnimatePresence, motion, useAnimation} from "framer-motion"
 import Input from "./Input";
+
 export default function Card({ card: { name, value, design } }) {
+  const {getCard} = useGame()
   const [showThings, setShowThings ] = useState(true)
   const designMap = {
     diamonds: <>&#9830;</>,
@@ -218,28 +220,27 @@ export default function Card({ card: { name, value, design } }) {
       </div>
     );
   };
-
+const names = 'rege';
+console.log(names)
   const [front, setFront] = useState(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
   const [currentEnterTime, setEnterTime] = useState(undefined);
   const [currentLeaveTime, setLeaveTime] = useState(undefined);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const [borderColor, setBorderColor] = useState('')
   const controls = useAnimation()
-  // console.log(1660336410376 -1660336409375 )
-  // When enter, write the time using .getTime()
+
   useEffect(() => {
-    if (currentEnterTime >=5) {
+    if (currentEnterTime >=5 ) {
+      
       clearInterval(intervalId)
     }
+    if (currentEnterTime === 0) {
+      setBorderColor("border-gray-400")
+    }
   }, [currentEnterTime])
-  // useEffect(() => {
-  //   controls.start({
-  //     x: "100%",
-  //     backgroundColor: "#f00",
-  //     transition: {duration: 3},
-  //   })
-  // }, [])
+
 
   const handleMouseEnter = (e) => {
     // const newAudio = new Audio("mixkit-fast-double-click-on-mouse-275.wav");
@@ -256,6 +257,25 @@ export default function Card({ card: { name, value, design } }) {
         const millisecondsToSeconds = Math.floor(
           (newTimeValue - firstEntered) / 1000
         );
+        switch(millisecondsToSeconds) {
+          case 0: 
+            setBorderColor("border-gray-400")
+          case 1:
+            setBorderColor("border-green-400")
+            break;
+          case 2: 
+            setBorderColor("border-blue-400");
+            break;
+          case 3: 
+            setBorderColor("border-yellow-400");
+            break;
+          case 4: 
+            setBorderColor("border-orange-400");
+            break;
+          case 5: 
+            setBorderColor("border-red-400")
+            break;
+        }
         //return that time into setEnterTime and have it rerender state
         return millisecondsToSeconds;
       });
@@ -275,33 +295,20 @@ export default function Card({ card: { name, value, design } }) {
 const handleMe = (e) => {
   console.log(e)
 }
-
+  const variants = {
+    increaseSize: {scale : 1, opacity: 1},
+    initial: {scale: 3, opacity: 0.5}
+  }
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    
-     {/* <Input x={x} setX={setX}/> */}
-      <motion.div />
-     {/* <AnimatePresence>
-      {showThings && (
-              <motion.div
-              // variants={variants}
-              animate="lol"
-              exit={{opacity:0}}
-              style={{width: "200px", height: "200px", backgroundColor: 'red'}}
-             >
-              <motion.p
-              style={{width: "100px", height: "100px", backgroundColor: 'blue'}}
-              variants={lists}
-              animate="haha"
-           />
-           </motion.div>
-             
-      )}
-
-    </AnimatePresence> */}
+    <motion.div
+      animate="increaseSize"
+      initial="initial"
+      variants={variants}
+    >
+    <div  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       
       {currentEnterTime}
-      <div className="m-1 w-32 rounded bg-white mb-2 relative shadow-md    hover:scale-x-125  cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 ">
+      <div className={`${borderColor} border-4 m-1 w-32 rounded bg-white mb-2 relative shadow-md    hover:scale-x-125  cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 `}>
         <CornerIcons />
 
         <div
@@ -314,6 +321,7 @@ const handleMe = (e) => {
 
       <BackOfTheCard />
     </div>
+    </motion.div>
   );
 }
 
