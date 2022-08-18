@@ -1,12 +1,18 @@
 import {useGame} from '@containers/GameContainer'
-import React, {useContext} from 'react'
-
+import React, {useContext, useEffect} from 'react'
+import Card from './card';
 export default function PlayerHands() {
-    const {getCard, deck, setPlayerHands} = useGame();
-    
-    
+    const {playerHand} = useGame();
 
   return (
-    <div>PlayerHands</div>
+    <>
+    <h1> This is a Player Hands Okay</h1>
+    {playerHand && (playerHand.map((item, index, array) => {
+      return (
+        <Card card={item} />
+      )
+    }))}
+    </>
   )
+  
 }

@@ -9,8 +9,15 @@ import {AnimatePresence, motion, useAnimation} from "framer-motion"
 import Input from "./Input";
 
 export default function Card({ card: { name, value, design } }) {
-  const {getCard} = useGame()
+  const {getCard,setPlayerHand} = useGame()
   const [showThings, setShowThings ] = useState(true)
+  const [front, setFront] = useState(false);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
+  const [currentEnterTime, setEnterTime] = useState(undefined);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  const [borderColor, setBorderColor] = useState('')
+  const controls = useAnimation()
   const designMap = {
     diamonds: <>&#9830;</>,
     hearts: <>&#9829;</>,
@@ -220,20 +227,11 @@ export default function Card({ card: { name, value, design } }) {
       </div>
     );
   };
-const names = 'rege';
-console.log(names)
-  const [front, setFront] = useState(false);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
-  const [currentEnterTime, setEnterTime] = useState(undefined);
-  const [currentLeaveTime, setLeaveTime] = useState(undefined);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [borderColor, setBorderColor] = useState('')
-  const controls = useAnimation()
+
+
 
   useEffect(() => {
     if (currentEnterTime >=5 ) {
-      
       clearInterval(intervalId)
     }
     if (currentEnterTime === 0) {
@@ -247,6 +245,7 @@ console.log(names)
     // newAudio.play();
     // When enter, write the time using .getTime()
     const firstEntered = new Date().getTime();
+    let millisecondsToSeconds;
     // Start an interval and save it interval variable, just so that variable can be used to stop the interval at somepoint!
     let interval = setInterval(() => {
       //update state using updator function
@@ -254,7 +253,7 @@ console.log(names)
         // After 1 second, get the new time and save it to newTimeValue
         const newTimeValue = new Date().getTime();
         // Find the difference between when we first entered the div vs after after a second
-        const millisecondsToSeconds = Math.floor(
+        millisecondsToSeconds = Math.floor(
           (newTimeValue - firstEntered) / 1000
         );
         switch(millisecondsToSeconds) {
@@ -282,6 +281,17 @@ console.log(names)
       // so this part is correct, you are setting an interval when the guy brings his mouse over, which will calculate the time between the moment the interval started and the current time
       // and sets it to a state variable called currentEnterTime
       //update every second
+      if (millisecondsToSeconds === 5) {
+        const cardInformation = {name, value, design};
+        getCard(cardInformation);  
+        setPlayerHand(prev => {
+           if (prev) {
+             return [...prev, cardInformation]
+           } else {
+             return [cardInformation]
+           }
+         });
+      }
     }, 1000);
     setIntervalId(interval);
   };
@@ -292,9 +302,6 @@ console.log(names)
   };
 
 
-const handleMe = (e) => {
-  console.log(e)
-}
   const variants = {
     increaseSize: {scale : 1, opacity: 1},
     initial: {scale: 3, opacity: 0.5}

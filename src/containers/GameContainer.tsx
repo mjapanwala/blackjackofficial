@@ -10,8 +10,8 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
   const [username, setUsername] = useLocalStorage("username", "");
   const [amount, setAmount] = useLocalStorage("amount", 0);
   const [deck, setDeck] = useState([]);
-  const [playerCards, setPlayerCards] = useState([]);
-  const [dealerCards, setDealerCards] = useState([]);
+  const [playerHand, setPlayerHand] = useState([]);
+  const [dealerHand, setDealerHand] = useState([]);
 
   useEffect(() => setDeck(deckGenerator()), []);
   // const popFromDeck = () => {
@@ -24,14 +24,27 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
   };
 
   const getCard = (cardInformation) => {
-    const randomNumber = Math.floor(Math.random() * deck.length);
-    const splicedCard = deck.splice(randomNumber, 1);
-    return splicedCard
+    //Card the customer has hovered on for 5 seconds
+    const chosenCard = cardInformation;
+    removeCardFromDeck([chosenCard])
+
+  }
+
+  const removeCardFromDeck = (chosenCard) => {
+   setDeck(prev => {
+    return prev.filter((item, index, array) => {
+        if ((chosenCard.name === item.name) && (chosenCard.design === item.design) && (chosenCard.value === item.value)) {
+          return false
+        } else {
+          return true
+        }
+    })
+   })
   }
 
   // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
-    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerCards, playerCards, setDealerCards }}>
+    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand }}>
       {/* if a boolean is true: <Confetti/> : null */}
       {/* <Confetti /> */}
       {children}
@@ -45,8 +58,8 @@ const GameContext = React.createContext({
   amount: undefined,
   deck: undefined,
   getCard: undefined,
-  setPlayerHands: undefined,
-  playerCards: undefined
+  setPlayerHand: undefined,
+  playerHand: undefined
 });
 
 export const useGame = () => React.useContext(GameContext);
