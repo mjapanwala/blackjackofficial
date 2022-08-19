@@ -5,19 +5,32 @@ import Queen from "./Queen";
 import King from "./King";
 import BackOfTheCard from "./BackOfTheCard";
 import Confetti from "react-confetti";
-import {AnimatePresence, motion, useAnimation} from "framer-motion"
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Input from "./Input";
+import PlayerHands from "./PlayerHands";
+interface CardProps {
+  card: {
+    name: string;
+    value: number;
+    design: string;
+  };
+  showFront?: boolean;
+  handleMouseEnter: React.MouseEventHandler<HTMLDivElement>;
+  handleMouseLeave: React.MouseEventHandler<HTMLDivElement>;
+  setEnterTime: Function;
+  borderColor: string;
+  currentEnterTime: number
+}
+export default function Card({
+  card: { name, value, design },
+  showFront = false,
+  handleMouseEnter,
+  handleMouseLeave,
+  borderColor,
+  currentEnterTime,
+}: CardProps) {
 
-export default function Card({ card: { name, value, design } }) {
-  const {getCard,setPlayerHand} = useGame()
-  const [showThings, setShowThings ] = useState(true)
-  const [front, setFront] = useState(false);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
-  const [currentEnterTime, setEnterTime] = useState(undefined);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [borderColor, setBorderColor] = useState('')
-  const controls = useAnimation()
+  
   const designMap = {
     diamonds: <>&#9830;</>,
     hearts: <>&#9829;</>,
@@ -230,92 +243,12 @@ export default function Card({ card: { name, value, design } }) {
 
 
 
-  useEffect(() => {
-    if (currentEnterTime >=5 ) {
-      clearInterval(intervalId)
-    }
-    if (currentEnterTime === 0) {
-      setBorderColor("border-gray-400")
-    }
-  }, [currentEnterTime])
-
-
-  const handleMouseEnter = (e) => {
-    // const newAudio = new Audio("mixkit-fast-double-click-on-mouse-275.wav");
-    // newAudio.play();
-    // When enter, write the time using .getTime()
-    const firstEntered = new Date().getTime();
-    let millisecondsToSeconds;
-    // Start an interval and save it interval variable, just so that variable can be used to stop the interval at somepoint!
-    let interval = setInterval(() => {
-      //update state using updator function
-      setEnterTime((prev) => {
-        // After 1 second, get the new time and save it to newTimeValue
-        const newTimeValue = new Date().getTime();
-        // Find the difference between when we first entered the div vs after after a second
-        millisecondsToSeconds = Math.floor(
-          (newTimeValue - firstEntered) / 1000
-        );
-        switch(millisecondsToSeconds) {
-          case 0: 
-            setBorderColor("border-gray-400")
-          case 1:
-            setBorderColor("border-green-400")
-            break;
-          case 2: 
-            setBorderColor("border-blue-400");
-            break;
-          case 3: 
-            setBorderColor("border-yellow-400");
-            break;
-          case 4: 
-            setBorderColor("border-orange-400");
-            break;
-          case 5: 
-            setBorderColor("border-red-400")
-            break;
-        }
-        //return that time into setEnterTime and have it rerender state
-        return millisecondsToSeconds;
-      });
-      // so this part is correct, you are setting an interval when the guy brings his mouse over, which will calculate the time between the moment the interval started and the current time
-      // and sets it to a state variable called currentEnterTime
-      //update every second
-      if (millisecondsToSeconds === 5) {
-        const cardInformation = {name, value, design};
-        getCard(cardInformation);  
-        setPlayerHand(prev => {
-           if (prev) {
-             return [...prev, cardInformation]
-           } else {
-             return [cardInformation]
-           }
-         });
-      }
-    }, 1000);
-    setIntervalId(interval);
-  };
-
-  const handleMouseLeave = () => {
-    clearInterval(intervalId);
-    setEnterTime(0);
-  };
-
-
-  const variants = {
-    increaseSize: {scale : 1, opacity: 1},
-    initial: {scale: 3, opacity: 0.5}
-  }
   return (
-    <motion.div
-      animate="increaseSize"
-      initial="initial"
-      variants={variants}
-    >
-    <div  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {currentEnterTime}
-      <div className={`${borderColor} border-4 m-1 w-32 rounded bg-white mb-2 relative shadow-md    hover:scale-x-125  cursor-pointer hover:shadow-2xl flex flex-col h-48 justify-between p-2 `}>
+      <div
+        className={`${borderColor} border-4 m-1 w-32 rounded bg-white mb-2 relative shadow-md  cursor-pointer  flex flex-col h-48 justify-between p-2 `}
+      >
         <CornerIcons />
 
         <div
@@ -325,10 +258,10 @@ export default function Card({ card: { name, value, design } }) {
         </div>
         <CornerIcons flip />
       </div>
-
+    
       <BackOfTheCard />
     </div>
-    </motion.div>
   );
 }
 
+// <Card card={} showFront= />

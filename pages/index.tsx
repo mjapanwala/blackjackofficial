@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "@components/form";
 import { useGame } from "@containers/GameContainer";
 import useLocalStorage from "@components/useLocalStorage";
@@ -28,8 +28,8 @@ const Input: React.FC = ({ ...other }) => {
         current amount: {amount}
         {!username && modal}
         <Deck />
-        <Random/>
-        <PlayerHands/>
+        <Random />
+        <PlayerHands />
       </div>
     </>
   );

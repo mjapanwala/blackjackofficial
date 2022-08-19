@@ -26,21 +26,15 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
   const getCard = (cardInformation) => {
     //Card the customer has hovered on for 5 seconds
     const chosenCard = cardInformation;
-    removeCardFromDeck([chosenCard])
-
-  }
-
-  const removeCardFromDeck = (chosenCard) => {
-   setDeck(prev => {
-    return prev.filter((item, index, array) => {
-        if ((chosenCard.name === item.name) && (chosenCard.design === item.design) && (chosenCard.value === item.value)) {
-          return false
-        } else {
-          return true
-        }
+     setDeck(prev => {
+      return prev.filter((item, index, array) => {
+        return item.name !== chosenCard.name
+      })
     })
-   })
+
   }
+
+
 
   // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
