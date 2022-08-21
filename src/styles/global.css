@@ -4,14 +4,7 @@
 
 
 
-#random {
-  background-color: red;
-  height:33px
-}
 
 
 
-.rotational:hover {
-  transform:rotateY(180deg);
 
-}

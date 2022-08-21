@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useGame } from "@containers/GameContainer";
 import Jack from "./Jack";
 import Queen from "./Queen";
 import King from "./King";
 import BackOfTheCard from "./BackOfTheCard";
-import Confetti from "react-confetti";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import Input from "./Input";
 import PlayerHands from "./PlayerHands";
+
 interface CardProps {
   card: {
     name: string;
@@ -19,18 +16,29 @@ interface CardProps {
   handleMouseLeave: React.MouseEventHandler<HTMLDivElement>;
   setEnterTime: Function;
   borderColor: string;
-  currentEnterTime: number
+  currentEnterTime: number;
+  index: number;
+  selectedCard: number;
+  playerHand: any
 }
 export default function Card({
-  card: { name, value, design },
+  card:{name, value, design},
+  index,
   showFront = false,
   handleMouseEnter,
   handleMouseLeave,
   borderColor,
   currentEnterTime,
+  selectedCard,
+  playerHand
 }: CardProps) {
 
-  
+  const withoutBorder = 'border-4  w-32 rounded bg-white mb-2 relative shadow-md  cursor-pointer  flex flex-col h-48 justify-between ';
+  const withBorder = `${borderColor} border-4  w-32 rounded bg-white mb-2 relative shadow-md  cursor-pointer  flex flex-col h-48 justify-between p-2`
+
+
+const selectCardCSS = selectedCard === index ? withBorder: withoutBorder
+
   const designMap = {
     diamonds: <>&#9830;</>,
     hearts: <>&#9829;</>,
@@ -38,7 +46,9 @@ export default function Card({
     clubs: <>&#9827;</>,
   };
   const isRed = design === "hearts" || design === "diamonds";
+
   const icon = designMap[design];
+
   const GenerateInside = () => {
     const styleChoice = isRed
       ? "  text-3xl text-red-600"
@@ -240,28 +250,36 @@ export default function Card({
       </div>
     );
   };
+  
+  const back = <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+  <div className={`${selectCardCSS}`}><BackOfTheCard /></div>
+  </div>
 
-
-
+  const front = 
+  <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={`${selectCardCSS}`}>
+ <CornerIcons />
+ <div
+   className={`text-lg text-center   w-full  absolute inset-0  p-2 xl:p-4`}
+ >
+   {GenerateInside()}
+ </div>
+ <CornerIcons flip />
+</div>
+</div>
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {currentEnterTime}
-      <div
-        className={`${borderColor} border-4 m-1 w-32 rounded bg-white mb-2 relative shadow-md  cursor-pointer  flex flex-col h-48 justify-between p-2 `}
-      >
-        <CornerIcons />
-
-        <div
-          className={`text-lg text-center   w-full  absolute inset-0  p-2 xl:p-4`}
-        >
-          {GenerateInside()}
-        </div>
-        <CornerIcons flip />
+    <>
+    <div>
+      <div>
+      {back}
       </div>
-    
-      <BackOfTheCard />
+      <div>
+       
+      {/* {front} */}
+      </div>
     </div>
+   </>
   );
 }
 
-// <Card card={} showFront= />
+

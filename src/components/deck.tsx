@@ -7,9 +7,11 @@ type Props = {};
 
 export default function Deck({}: Props) {
   const [currentEnterTime, setEnterTime] = useState(undefined);
-  const { deck, playerHand } = useGame();
+  const { deck, playerHand, getCard, setPlayerHand, setDeck } = useGame();
   const [borderColor, setBorderColor] = useState("");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
+  const [selectedCard, setSelectedCard] = useState(undefined)
+
   // Track the selected card.
   // [selectedCard,setSelectedCard]
   useEffect(() => {
@@ -21,9 +23,32 @@ export default function Deck({}: Props) {
     }
   }, [currentEnterTime]);
 
-  const handleMouseEnter = (e, index) => {
-    console.log(index);
-    //
+  function createBorderColor(millisecondsToSeconds:number) {
+    
+    switch (millisecondsToSeconds) {
+      case 0:
+        setBorderColor("border-gray-400");
+      case 1:
+        setBorderColor("border-green-400");
+        break;
+      case 2:
+        setBorderColor("border-blue-400");
+        break;
+      case 3:
+        setBorderColor("border-yellow-400");
+        break;
+      case 4:
+        setBorderColor("border-orange-400");
+        break;
+      case 5:
+        setBorderColor("border-red-400");
+        break;
+    }
+    return millisecondsToSeconds;
+  }
+  
+  const handleMouseEnter = (e, index,card) => {
+    
     // const newAudio = new Audio("mixkit-fast-double-click-on-mouse-275.wav");
     // newAudio.play();
     // When enter, write the time using .getTime()
@@ -39,51 +64,33 @@ export default function Deck({}: Props) {
         millisecondsToSeconds = Math.floor(
           (newTimeValue - firstEntered) / 1000
         );
-        switch (millisecondsToSeconds) {
-          case 0:
-            setBorderColor("border-gray-400");
-          case 1:
-            setBorderColor("border-green-400");
-            break;
-          case 2:
-            setBorderColor("border-blue-400");
-            break;
-          case 3:
-            setBorderColor("border-yellow-400");
-            break;
-          case 4:
-            setBorderColor("border-orange-400");
-            break;
-          case 5:
-            setBorderColor("border-red-400");
-            break;
-        }
-        return millisecondsToSeconds;
-      });
 
+      });
+      createBorderColor(millisecondsToSeconds)
+      setSelectedCard(index); 
       if (millisecondsToSeconds === 5) {
-        const cardInformation = { name, value, design };
-        getCard(cardInformation);
-        setPlayerHand((prev) => {
-          if (prev) {
-            return [...prev, cardInformation];
-          } else {
-            return [cardInformation];
-          }
-        });
-      }
+        const playersSelection = [card];
+        setDeck((prev) => {
+          return deck.filter((card, index, array) => {
+            if ((card.name !== playersSelection[0].name) && (card.design !==playersSelection[0].design)) {
+              return true
+            }
+          })
+        })
+        setPlayerHand(playersSelection);
+      }  
     }, 1000);
     setIntervalId(interval);
   };
 
   const handleMouseLeave = (e, index) => {
     clearInterval(intervalId);
+    setSelectedCard(undefined)
     setEnterTime(0);
   };
 
   return (
-    <AnimatePresence exitBeforeEnter>
-      {playerHand.length < 2 && (
+      <>
         <motion.div
           exit={{
             scale: [0.5, 1, 1.5, 1],
@@ -99,18 +106,22 @@ export default function Deck({}: Props) {
               currentEnterTime={undefined}
               showFront={undefined}
               card={card}
-              key={index}
+              index={index}
+              selectedCard={selectedCard}
               handleMouseLeave={(e) => {
                 handleMouseLeave(e, index);
               }}
               handleMouseEnter={(e) => {
-                handleMouseEnter(e, index);
+                handleMouseEnter(e, index, card);
               }}
               borderColor={borderColor}
+              playerHand={playerHand}
             />
           ))}
+         
         </motion.div>
-      )}
-    </AnimatePresence>
+   
+    </>
+   
   );
 }

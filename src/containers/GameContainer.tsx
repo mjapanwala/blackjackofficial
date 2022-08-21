@@ -38,7 +38,7 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
 
   // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
-    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand }}>
+    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand, setDeck }}>
       {/* if a boolean is true: <Confetti/> : null */}
       {/* <Confetti /> */}
       {children}
@@ -51,6 +51,7 @@ const GameContext = React.createContext({
   setFormValues: undefined,
   amount: undefined,
   deck: undefined,
+  setDeck:undefined,
   getCard: undefined,
   setPlayerHand: undefined,
   playerHand: undefined

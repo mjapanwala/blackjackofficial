@@ -5,31 +5,22 @@ import { useGame } from "@containers/GameContainer";
 import useLocalStorage from "@components/useLocalStorage";
 import Card from "../../v2/src/components/card";
 import Deck from "@components/deck";
-import Random from "@components/Random";
+import Bet from "@components/Bet";
 import PlayerHands from "@components/PlayerHands";
+import SelectCards from "@components/SelectCards";
 
 const Input: React.FC = ({ ...other }) => {
-  const [input, setInput] = useState("");
-  const { username, amount, deck } = useGame();
-
-  const modal = (
-    <div>
-      <Form />
-    </div>
-  );
-
+  const { playerHand } = useGame();
   return (
     <>
-      <div className="h-screen fixed w-full bg-green-800 overflow-scroll">
-        <div></div>
-        <h1>fgsdg</h1>
-        current username: {username}
-        <br />
-        current amount: {amount}
-        {!username && modal}
+      <div className="h-screen fixed w-full bg-green-800 overflow-scroll  ">
+        <div className="p-4">
         <Deck />
-        <Random />
-        <PlayerHands />
+        </div>
+        <div>
+          <PlayerHands />
+        </div>
+        
       </div>
     </>
   );
