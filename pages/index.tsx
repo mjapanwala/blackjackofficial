@@ -8,22 +8,26 @@ import Deck from "@components/deck";
 import Bet from "@components/Bet";
 import PlayerHands from "@components/PlayerHands";
 import SelectCards from "@components/SelectCards";
+import GamblingChips from "@components/GamblingChips";
 
 const Input: React.FC = ({ ...other }) => {
   const { playerHand } = useGame();
   return (
     <>
-      <div className="h-screen fixed w-full bg-green-800 overflow-scroll  ">
-        <div className="p-4">
+      <div className="h-screen grid grid-cols-2 grid-rows-2 w-full bg-green-800  ">
+        <div className="col-span-1 row-span-1">
         <Deck />
         </div>
-        <div>
+        <div className=" ">
           <PlayerHands />
         </div>
-        
+        <div className="col-span-2 row-span-2">
+          <GamblingChips/>
+        </div>
       </div>
     </>
   );
 };
+
 
 export default Input;
