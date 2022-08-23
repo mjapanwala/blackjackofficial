@@ -1,7 +1,8 @@
 import React from 'react'
+import StartGame from './StartGame'
 
-export default function Bet() {
+export default function BetSection() {
   return (
-    <div>Bet</div>
+   <StartGame/>
   )
 }

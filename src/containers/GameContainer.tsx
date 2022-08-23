@@ -6,12 +6,14 @@ import dynamic from "next/dynamic";
 // });
 type Props = {};
 
-export default function GameContainer({ children }: PropsWithChildren<{}>) {
+ export default function GameContainer({ children }: PropsWithChildren<{}>) {
   const [username, setUsername] = useLocalStorage("username", "");
   const [amount, setAmount] = useLocalStorage("amount", 0);
   const [deck, setDeck] = useState([]);
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
+  const [startGameButton, setGameButton] = useState(true);
+
 
   useEffect(() => setDeck(deckGenerator()), []);
   // const popFromDeck = () => {
@@ -34,11 +36,8 @@ export default function GameContainer({ children }: PropsWithChildren<{}>) {
 
   }
 
-
-
-  // const triggerConfetting = (second = 5) => turn confetti on, setInterval(turnconfettiOff, second)
   return (
-    <GameContext.Provider value={{ username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand, setDeck }}>
+    <GameContext.Provider value={{ startGameButton, setGameButton,username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand, setDeck }}>
       {/* if a boolean is true: <Confetti/> : null */}
       {/* <Confetti /> */}
       {children}
@@ -54,8 +53,11 @@ const GameContext = React.createContext({
   setDeck:undefined,
   getCard: undefined,
   setPlayerHand: undefined,
-  playerHand: undefined
+  playerHand: undefined,
+  startGameButton:undefined,
+  setGameButton:undefined
 });
+
 
 export const useGame = () => React.useContext(GameContext);
 
@@ -90,3 +92,4 @@ function deckGenerator() {
 
   return deck;
 }
+

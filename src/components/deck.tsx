@@ -10,7 +10,7 @@ export default function Deck({}: Props) {
   const { deck, playerHand, getCard, setPlayerHand, setDeck } = useGame();
   const [borderColor, setBorderColor] = useState("");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
-  const [selectedCard, setSelectedCard] = useState(undefined)
+  const [selectedCard, setSelectedCard] = useState(undefined);
 
   // Track the selected card.
   // [selectedCard,setSelectedCard]
@@ -23,8 +23,7 @@ export default function Deck({}: Props) {
     }
   }, [currentEnterTime]);
 
-  function createBorderColor(millisecondsToSeconds:number) {
-    
+  function createBorderColor(millisecondsToSeconds: number) {
     switch (millisecondsToSeconds) {
       case 0:
         setBorderColor("border-gray-400");
@@ -46,9 +45,8 @@ export default function Deck({}: Props) {
     }
     return millisecondsToSeconds;
   }
-  
-  const handleMouseEnter = (e, index,card) => {
-    
+
+  const handleMouseEnter = (e, index, card) => {
     // const newAudio = new Audio("mixkit-fast-double-click-on-mouse-275.wav");
     // newAudio.play();
     // When enter, write the time using .getTime()
@@ -64,64 +62,66 @@ export default function Deck({}: Props) {
         millisecondsToSeconds = Math.floor(
           (newTimeValue - firstEntered) / 1000
         );
-
       });
-      createBorderColor(millisecondsToSeconds)
-      setSelectedCard(index); 
+      createBorderColor(millisecondsToSeconds);
+      setSelectedCard(index);
       if (millisecondsToSeconds === 5) {
-        const playersSelection = [card];
         setDeck((prev) => {
-          return deck.filter((card, index, array) => {
-            if ((card.name !== playersSelection[0].name) && (card.design !==playersSelection[0].design)) {
-              return true
+          var newDeck = prev.filter((deckCard, index, array) => {
+            if (
+              //card.name = 5
+              //card.value = 5
+              //card.design =
+              card.name == deckCard.name &&
+              card.value == deckCard.value &&
+              card.design == deckCard.design
+            ) {
+              return false;
             }
-          })
-        })
-        setPlayerHand(playersSelection);
-      }  
+            return true;
+          });
+          console.log(card);
+          console.log(newDeck);
+          return newDeck;
+        });
+        setPlayerHand([...playerHand, card]);
+      }
     }, 1000);
     setIntervalId(interval);
   };
 
   const handleMouseLeave = (e, index) => {
     clearInterval(intervalId);
-    setSelectedCard(undefined)
+    setSelectedCard(undefined);
     setEnterTime(0);
   };
 
   return (
-      <>
-        <motion.div
-          exit={{
-            scale: [0.5, 1, 1.5, 1],
-            x: [5, 0, -5, 0],
-            transition: { duration: 2 },
-          }}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="flex flex-wrap"
-        >
-          {deck.map((card, index) => (
-            <Card
-              currentEnterTime={undefined}
-              showFront={undefined}
-              card={card}
-              index={index}
-              selectedCard={selectedCard}
-              handleMouseLeave={(e) => {
-                handleMouseLeave(e, index);
-              }}
-              handleMouseEnter={(e) => {
-                handleMouseEnter(e, index, card);
-              }}
-              borderColor={borderColor}
-              playerHand={playerHand}
-            />
-          ))}
-         
-        </motion.div>
-   
+    <>
+      <motion.div  className="flex flex-wrap">
+        {deck.map((card, index) => (
+          <Card
+            currentEnterTime={undefined}
+            showFront={false}
+            card={card}
+            index={index}
+            selectedCard={selectedCard}
+            handleMouseLeave={(e) => {
+              handleMouseLeave(e, index);
+            }}
+            handleMouseEnter={(e) => {
+              handleMouseEnter(e, index, card);
+            }}
+            borderColor={index == selectedCard ? borderColor : ""}
+            playerHand={playerHand}
+          />
+        ))}
+      </motion.div>
     </>
-   
   );
 }
+
+// <Card> -> size, color, animation, events
+//<Front/> -> generateInside, designs for each card
+//<Back/> -> the image for the back of the card.
+//</Card>
