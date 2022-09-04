@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import useLocalStorage from "../components/useLocalStorage";
 import dynamic from "next/dynamic";
 // const Confetti = dynamic(() => import("../components/CustomConfetti"), {
 //   ssr: false,
@@ -7,37 +6,48 @@ import dynamic from "next/dynamic";
 type Props = {};
 
  export default function GameContainer({ children }: PropsWithChildren<{}>) {
-  const [username, setUsername] = useLocalStorage("username", "");
-  const [amount, setAmount] = useLocalStorage("amount", 0);
+
   const [deck, setDeck] = useState([]);
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [startGameButton, setGameButton] = useState(true);
-
 
   useEffect(() => setDeck(deckGenerator()), []);
   // const popFromDeck = () => {
   //   const temp = [...deck];
   //   const slicedCard = temp.slice(Math.random() * temp.length);
   // };
-  const setFormValues = (values) => {
-    setUsername(values.username);
-    setAmount(values.amount);
-  };
+
 
   const getCard = (cardInformation) => {
     //Card the customer has hovered on for 5 seconds
     const chosenCard = cardInformation;
-     setDeck(prev => {
+    setDeck((prev) => {
       return prev.filter((item, index, array) => {
-        return item.name !== chosenCard.name
-      })
-    })
-
-  }
-
+        return item.name !== chosenCard.name;
+      });
+    });
+  };
+  const customFunction = () => {
+    setDeck()
+  };
+ 
   return (
-    <GameContext.Provider value={{ startGameButton, setGameButton,username, amount, setFormValues, deck, getCard, setPlayerHand, playerHand, setDeck }}>
+    <GameContext.Provider
+      value={{
+        customFunction,
+        startGameButton,
+        setGameButton,
+    
+        
+    
+        deck,
+        getCard,
+        setPlayerHand,
+        playerHand,
+        setDeck,
+      }}
+    >
       {/* if a boolean is true: <Confetti/> : null */}
       {/* <Confetti /> */}
       {children}
@@ -46,18 +56,17 @@ type Props = {};
 }
 
 const GameContext = React.createContext({
-  username: "",
+  
   setFormValues: undefined,
   amount: undefined,
   deck: undefined,
-  setDeck:undefined,
+  setDeck: undefined,
   getCard: undefined,
   setPlayerHand: undefined,
   playerHand: undefined,
-  startGameButton:undefined,
-  setGameButton:undefined
+  startGameButton: undefined,
+  setGameButton: undefined,
 });
-
 
 export const useGame = () => React.useContext(GameContext);
 
@@ -92,4 +101,3 @@ function deckGenerator() {
 
   return deck;
 }
-

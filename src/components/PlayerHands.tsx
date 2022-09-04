@@ -1,4 +1,4 @@
-import { useGame } from "@containers/GameContainer";
+import { useGame } from "@containers/GameContainer/GameContainer";
 import React, { useContext, useEffect } from "react";
 import Card from "./card";
 import { motion } from "framer-motion";

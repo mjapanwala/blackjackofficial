@@ -3,6 +3,7 @@ import BackOfTheCard from "./BackOfTheCard";
 import PlayerHands from "./PlayerHands";
 import FrontOfTheCard from "./FrontOfTheCard";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { useGame } from "@containers/GameContainer/GameContainer";
 interface CardProps {
   card: {
     name: string;
@@ -31,7 +32,7 @@ export default function Card({
   playerHand,
 }: CardProps) {
   const cardFrontCss = `${borderColor} border-4  h-full rounded bg-white mb-2 relative shadow-md  cursor-pointer  flex flex-col  justify-between p-2`;
-
+  const { customFunction } = useGame();
   return (
     <motion.div
       animate={{ scale: 1 }}
@@ -41,6 +42,7 @@ export default function Card({
       layoutId={`${name}-${value}-${design}`}
       id={`${name}-${value}-${design}`}
     >
+      <button onClick={customFunction}>asd</button>
       <div className={`${cardFrontCss}`}>
         {showFront ? (
           <FrontOfTheCard

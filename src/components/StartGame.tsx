@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useGame } from "@containers/GameContainer";
+import { useGame } from "@containers/GameContainer/GameContainer";
 export default function StartGame() {
   const {startGameButton} = useGame();
   

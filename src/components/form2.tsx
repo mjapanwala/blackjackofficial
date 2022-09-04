@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import CustomField from "./field";
-import { useGame } from "@containers/GameContainer";
+import { useGame } from "@containers/GameContainer/GameContainer";
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
     .max(10, "Too Long bro")

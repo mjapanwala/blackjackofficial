@@ -1,4 +1,4 @@
-import { useGame } from "@containers/GameContainer";
+import { useGame } from "@containers/GameContainer/GameContainer";
 import React, { useState, useEffect } from "react";
 import Card from "./card";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,6 +11,45 @@ export default function Deck({}: Props) {
   const [borderColor, setBorderColor] = useState("");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
   const [selectedCard, setSelectedCard] = useState(undefined);
+
+  // class NewNode {
+  //     value: number;
+  //     next: any;
+  //   constructor(value:number) {
+  //       this.value = value;
+  //       this.next = null;
+  //   }
+  // }
+  // class LinkedList {
+  //   value: number;
+  //   head: any;
+  //   tail: any;
+  //   length: number;
+  //   constructor(value:number) {
+  //     const newNode = new NewNode(value);
+  //     this.head = newNode;
+  //     this.tail = newNode;
+  //     this.length = 1;
+  //   }
+  //   push(value:number) {
+  //     const newNode = new NewNode(value);
+  //     if (!this.head) {
+  //       this.head = newNode;
+  //       this.tail = newNode;
+  //     } else {
+  //       this.tail.next = newNode;
+  //       this.tail = newNode;
+  //     }
+  //     this.length++
+  //     return this     
+  //   }
+  // }
+  
+  // const hi = new LinkedList(5);
+  // const lol = hi.push(3);
+  // console.log(lol)
+
+
 
   // Track the selected card.
   // [selectedCard,setSelectedCard]
@@ -80,8 +119,7 @@ export default function Deck({}: Props) {
             }
             return true;
           });
-          console.log(card);
-          console.log(newDeck);
+ 
           return newDeck;
         });
         setPlayerHand([...playerHand, card]);
