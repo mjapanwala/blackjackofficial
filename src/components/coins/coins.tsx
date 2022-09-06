@@ -17,7 +17,7 @@ export default function Coins({handleButtonClick}, {children}, props) {
               <>
               <motion.button whileHover={{scale: 1.2}} onClick={(event) => handleButtonClick(event,coin, index)}  className={`${coin.color} text-white inline-block w-11 h-11 rounded-full text-center m-2  brightness-125 text-lg min-w-max`}>{coin.coinValue} 
               <span className="absolute top-0 right-0 inline-block w-6 h-6  opacity-75 rounded-full -m-4 ">{coin.quantity}</span></motion.button>
-             
+              
               </>
             );
           })}

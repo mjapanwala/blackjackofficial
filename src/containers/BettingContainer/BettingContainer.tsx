@@ -3,7 +3,9 @@ import Coins from "@components/coins/coins";
 import PlaceBet from "@components/Buttons/placeBet";
 import LetsPlay from "@components/Buttons/letsPlay";
 import  {ButtonContext}  from "@containers/ButtonContainer/ButtonContainer";
-export const BetContainer = createContext("null");
+export const BetContainer = createContext({
+  
+});
 let coins = [
   {
     coinValue: 5,
@@ -33,8 +35,10 @@ let coins = [
 ];
 
 export default function BettingContainer() {
+
   const handleButtonClick= (event, coin, index) => {
-    const mappedOut = coins.map((item, index, array) => {
+    const duplicateCoins = [...coins];
+    const totalChips = duplicateCoins.map((item, index, array) => {
       if (item.coinValue=== coin.coinValue && item.quantity >=1) {
         item.quantity-= 1
         return item;
@@ -42,11 +46,16 @@ export default function BettingContainer() {
         return item
       }
     })
-    setCoinState(mappedOut)
-    
+    setCoinState(totalChips);
+    handleBetCoin();
 }
-  const [coinState, setCoinState] = useState(coins);
 
+function handleBetCoin() {
+  console.log(coins, coinState)
+}
+
+  const [coinState, setCoinState] = useState(coins);
+  const [betCoins, setBetCoinState] = useState(undefined)
   return (
     <>
       <BetContainer.Provider value={{ coinState: coinState}}>
