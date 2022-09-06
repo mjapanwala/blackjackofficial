@@ -37,7 +37,8 @@ let coins = [
 export default function BettingContainer() {
 
   const handleButtonClick= (event, coin, index) => {
-    const duplicateCoins = [...coins];
+
+    const duplicateCoins = coins.map(coin => Object.assign({}, coin));
     const totalChips = duplicateCoins.map((item, index, array) => {
       if (item.coinValue=== coin.coinValue && item.quantity >=1) {
         item.quantity-= 1
@@ -46,16 +47,13 @@ export default function BettingContainer() {
         return item
       }
     })
-    setCoinState(totalChips);
-    handleBetCoin();
+    console.log(totalChips)
+  
+    // setCoinState (n => [...totalChips, n])
 }
-
-function handleBetCoin() {
-  console.log(coins, coinState)
-}
-
   const [coinState, setCoinState] = useState(coins);
   const [betCoins, setBetCoinState] = useState(undefined)
+ 
   return (
     <>
       <BetContainer.Provider value={{ coinState: coinState}}>
