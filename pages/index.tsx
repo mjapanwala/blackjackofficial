@@ -5,17 +5,21 @@ import LetsPlay from "@components/Buttons/letsPlay";
 import PlaceBet from "@components/Buttons/placeBet";
 import ButtonContainer from "@containers/ButtonContainer/ButtonContainer";
 
-const Input: React.FC = ({ ...other }) => {
+const Layout: React.FC = ({ ...other }) => {
   return (
     <>
       <div className="bg-green-500 h-screen">
-          <LetsPlay/>
-         
+          <LetsPlay/>        
+          <ButtonContainer>
           <BettingContainer/> 
-          <ButtonContainer/>
+          </ButtonContainer>
       </div>
     </>
   );
 };
 
-export default Input;
+
+
+export default Layout;
+
+

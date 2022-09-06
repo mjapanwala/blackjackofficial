@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import Coins from "@components/coins/coins";
 import PlaceBet from "@components/Buttons/placeBet";
+import LetsPlay from "@components/Buttons/letsPlay";
+import  {ButtonContext}  from "@containers/ButtonContainer/ButtonContainer";
 export const BetContainer = createContext("null");
 let coins = [
   {
@@ -31,7 +33,6 @@ let coins = [
 ];
 
 export default function BettingContainer() {
-
   const handleButtonClick= (event, coin, index) => {
     const mappedOut = coins.map((item, index, array) => {
       if (item.coinValue=== coin.coinValue && item.quantity >=1) {
@@ -44,14 +45,15 @@ export default function BettingContainer() {
     setCoinState(mappedOut)
     
 }
-  
   const [coinState, setCoinState] = useState(coins);
 
   return (
     <>
       <BetContainer.Provider value={{ coinState: coinState}}>
-        <Coins handleButtonClick={handleButtonClick} />
+        <Coins handleButtonClick={handleButtonClick}/>
+
       </BetContainer.Provider> 
+
     </>
   );
 }

@@ -4,12 +4,13 @@ import BettingContainer, {
 } from "@containers/BettingContainer/BettingContainer";
 import { BetContainer } from "@containers/BettingContainer/BettingContainer";
 import {motion} from 'framer-motion'
-export default function Coins({handleButtonClick}, children) {
+export default function Coins({handleButtonClick}, {children}, props) {
   const { coinState } = useContext(BetContainer);
   
   return (
     <>
-      <div className="absolute w-full top-2/3 p-4 ">
+      <motion.div  animate={{ scale: 1.2 }}
+  transition={{ type: "spring", stiffness: 100 }}className="absolute w-full top-2/3 p-4 ">
         <ul className="flex justify-center relative ">
           {coinState.map((coin, index, array) => {
             return (
@@ -21,7 +22,7 @@ export default function Coins({handleButtonClick}, children) {
             );
           })}
         </ul>
-      </div>
+      </motion.div>
     </>
   );
 }
